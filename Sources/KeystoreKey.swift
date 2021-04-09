@@ -51,11 +51,11 @@ public struct KeystoreKey {
             var privKey: SecKey?
             let status = SecKeyGeneratePair(parameters as CFDictionary, &pubKey, &privKey)
             guard let privateKey = privKey, status == noErr else {
-                fatalError("Failed to generate key pair")
+                throw EncryptError.generateKeyPairFail
             }
 
             guard let keyRepresentation = SecKeyCopyExternalRepresentation(privateKey, nil) as Data? else {
-                fatalError("Failed to extract new private key")
+                throw EncryptError.extractPrivateKeyFail
             }
             
             let key = keyRepresentation[(keyRepresentation.count - 32)...]
@@ -223,10 +223,13 @@ public enum DecryptError: Error {
     case unsupportedCipher
     case invalidCipher
     case invalidPassword
+    case missingAccountKey
 }
 
 public enum EncryptError: Error {
     case invalidMnemonic
+    case generateKeyPairFail
+    case extractPrivateKeyFail
 }
 
 extension KeystoreKey: Codable {
