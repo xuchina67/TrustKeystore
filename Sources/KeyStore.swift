@@ -142,7 +142,7 @@ public final class KeyStore {
     /// - Returns: encrypted JSON key
     public func export(account: Account, password: String, newPassword: String) throws -> Data {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
 
         var privateKey = try key.decrypt(password: password)
@@ -171,7 +171,7 @@ public final class KeyStore {
     /// - Returns: private key data
     public func exportPrivateKey(account: Account, password: String) throws -> Data {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
 
         var privateKey = try key.decrypt(password: password)
@@ -199,7 +199,7 @@ public final class KeyStore {
     /// - Throws: `EncryptError.invalidMnemonic` if the account is not an HD wallet.
     public func exportMnemonic(account: Account, password: String) throws -> String {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
         var data = try key.decrypt(password: password)
         defer {
@@ -229,7 +229,7 @@ public final class KeyStore {
     ///   - newPassword: new password
     public func update(account: Account, password: String, newPassword: String) throws {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
 
         var privateKey = try key.decrypt(password: password)
@@ -253,7 +253,7 @@ public final class KeyStore {
     /// Deletes an account including its key if the password is correct.
     public func delete(account: Account, password: String) throws {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
 
         var privateKey = try key.decrypt(password: password)
@@ -306,7 +306,7 @@ public final class KeyStore {
     /// Saves the account to the given directory.
     private func save(account: Account, in directory: URL) throws {
         guard let key = keysByAddress[account.address] else {
-            fatalError("Missing account key")
+            throw DecryptError.missingAccountKey
         }
         try save(key: key, to: account.url)
     }
