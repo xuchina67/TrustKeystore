@@ -59,11 +59,11 @@ public struct KeystoreKey {
             }
             
             let key = keyRepresentation[(keyRepresentation.count - 32)...]
-            print("创建了私钥\(key.hexString)")
+            //print("创建了私钥\(key.hexString)")
             try self.init(password: password, key: key)
         case .hierarchicalDeterministicWallet:
             let mnemonic = Mnemonic.generate(strength: 128)
-            print("助记词\(mnemonic)")
+            //print("助记词\(mnemonic)")
             try self.init(password: password, mnemonic: mnemonic, passphrase: "")
         }
     }
@@ -97,7 +97,6 @@ public struct KeystoreKey {
         let key = Wallet(mnemonic: mnemonic, passphrase: passphrase, path: derivationPath).getKey(at: 0)
         let pubKey = key.publicKey
         address = KeystoreKey.decodeAddress(from: pubKey)
-        print("私钥: \(key.privateKey.hexString)")
         type = .hierarchicalDeterministicWallet
         self.passphrase = passphrase
         self.mnemonic = mnemonic
