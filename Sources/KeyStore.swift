@@ -359,4 +359,11 @@ extension KeyStore {
         }
         return false
     }
+    
+    /// Generate an address with mnemonic derivationPath.
+    public func createWalletAddress(derivationPath:String = Wallet.defaultPath,mnemonic:String,password:String = "") -> Address{
+        let wallet = Wallet(mnemonic: mnemonic, passphrase: password, path: derivationPath)
+        let pubKey = wallet.getKey(at: 0).publicKey
+        return KeystoreKey.decodeAddress(from: pubKey)
+    }
 }
