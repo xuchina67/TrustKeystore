@@ -248,6 +248,7 @@ public final class KeyStore {
             newKey = try KeystoreKey(password: newPassword, mnemonic: string, passphrase: key.passphrase)
         }
         keysByAddress[newKey.address] = newKey
+        try save(key: newKey, to: account.url)
     }
 
     /// Deletes an account including its key if the password is correct.
