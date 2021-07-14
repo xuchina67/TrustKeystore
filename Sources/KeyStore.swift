@@ -72,6 +72,10 @@ public final class KeyStore {
         try save(account: account, in: keyDirectory)
         accountsByAddress[account.address] = account
     }
+    
+    public func addKey(key: KeystoreKey) throws {
+        keysByAddress[key.address] = key
+    }
 
     /// Imports an encrypted JSON key.
     ///
