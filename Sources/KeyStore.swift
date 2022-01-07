@@ -371,4 +371,12 @@ extension KeyStore {
         let pubKey = wallet.getKey(at: 0).publicKey
         return KeystoreKey.decodeAddress(from: pubKey)
     }
+    
+    /// get an path with account.
+    public func generateWalletPath(account: Account) throws -> String {
+        guard let key = keysByAddress[account.address] else {
+            throw DecryptError.missingAccountKey
+        }
+        return key.derivationPath
+    }
 }
