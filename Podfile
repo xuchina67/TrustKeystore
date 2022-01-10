@@ -5,7 +5,7 @@ target 'TrustKeystore' do
 
   pod 'BigInt', inhibit_warnings: true
   pod 'CryptoSwift', '~> 0.10.0'
-  pod 'TrezorCrypto', :git => 'https://github.com/xuchina67/trezor-crypto-ios', '~> 0.0.9', inhibit_warnings: true
+  pod 'TrezorCrypto', :git => 'https://github.com/xuchina67/trezor-crypto-ios', inhibit_warnings: true
   pod 'TrustCore', :git=>'https://github.com/TrustWallet/trust-core', :branch=> 'master', inhibit_warnings: true
   pod 'SwiftLint'
 
